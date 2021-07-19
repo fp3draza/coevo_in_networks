@@ -19,7 +19,7 @@ measure_module_connectance = function(connectance_og,replica){
   # Read Membership data from MODULAR software output
   # It will currently read data from networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (for_modular_40_60).
   # If you want to work with networks of different size, change the numbers (for_modular_X_X)
-  membership = read.table(paste('~/Documents/PhD/Work/Projects/coevo_in_networks/Data/for_modular_40_60/resultsSA/MEMBERS_C_',connectance_og,'_R_',replica,'.txt',sep =''))
+  membership = read.table(paste('Data/for_modular_40_60/resultsSA/MEMBERS_C_',connectance_og,'_R_',replica,'.txt',sep =''))
   membership = membership[-1,]
   membership$index = as.numeric(substring(membership$V1,2))
   membership = membership[order(membership$index),]
@@ -30,7 +30,7 @@ measure_module_connectance = function(connectance_og,replica){
   # Load network file
   # It will currently read data from networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (networks_30_30).
   # If you want to work with networks of different size, change the numbers (networks_X_X)
-  network = read.csv(paste('~/Documents/PhD/Work/Projects/coevo_in_networks/Data/networks_30_30/C_',connectance_og,'_R_',replica,'.csv',sep = ''),header=FALSE)
+  network = read.csv(paste('Data/networks_30_30/C_',connectance_og,'_R_',replica,'.csv',sep = ''),header=FALSE)
   n_col = ncol(network)
   n_row = nrow(network)
   # Name rows and columns of dataframe
@@ -111,7 +111,7 @@ measure_module_metrics = function(connectance_from,connectance_to,connectance_by
   # Write data to csv 
   # It will currently save data for networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (processed_output_30_30).
   # If you want to work with networks of different size, change the numbers (processed_output_X_X)
-  write.csv(data_frame_analysis,paste("~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/module_metrics/module_metrics.csv",sep=""))
+  write.csv(data_frame_analysis,paste("Results/processed_output_30_30/module_metrics/module_metrics.csv",sep=""))
 }
 
 
