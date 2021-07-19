@@ -54,7 +54,7 @@ merge_dataframe = function(directory){
 # Define the directory where trait matching results are stored.
 # Note that information on number and ratio of species in the networks are specified in the path (processed_output_30_30).
 # If you want to work with results from other network sizes or ratios, change the numbers (processed_output_X_X)
-trait_matching_directory = '~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/trait_matching/'
+trait_matching_directory = 'Results/processed_output_30_30/trait_matching/'
 
 # Run function with the specified trait matching directory
 merge_dataframe(trait_matching_directory)
