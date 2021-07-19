@@ -5,13 +5,13 @@ require(dplyr)
 # This is specified by setting processed_output_30_30. If you want to work with the results of different network sizes/ratios,
 # change the numbers (processed_output_X_X).
 # Read trait matching results
-trait_matching_data = read.csv('~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/trait_matching/merged_results.csv',row.names = 1)
+trait_matching_data = read.csv('Results/processed_output_30_30/trait_matching/merged_results.csv',row.names = 1)
 # Read species role data
-species_role_data = read.csv('~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/network_roles/network_roles_niche.csv',row.names = 1)
+species_role_data = read.csv('Results/processed_output_30_30/network_roles/network_roles_niche.csv',row.names = 1)
 # Read network properties data
-network_data = read.csv('~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/network_metrics/modular_nested_metrics.csv',row.names = 1)
+network_data = read.csv('Results/processed_output_30_30/network_metrics/modular_nested_metrics.csv',row.names = 1)
 # Read module properties data
-module_data = read.csv('~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/module_metrics/module_metrics.csv',row.names = 1)
+module_data = read.csv('Results/processed_output_30_30/module_metrics/module_metrics.csv',row.names = 1)
 
 # Calculate standardized trait matching values
 
@@ -105,7 +105,7 @@ data_for_overall_pca <- complete_data %>% select(network_name, mutualistic_selec
 # This piece of code will store the results from the networks consisting of 60 species with 30-30 resource and consumer species. 
 # The results are stored in a directory that contains the information of number and ratio of species in the networks (processed_output_30_30).
 # If you work with networks of different size/ratios, change the numbers (processed_output_X_X)
-write.csv(data_for_network_pca, '~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/wrangled_data/complete_data_for_network_analysis.csv')
-write.csv(data_for_module_pca, '~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/wrangled_data/complete_data_for_module_analysis.csv')
-write.csv(data_for_species_pca, '~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/wrangled_data/complete_data_for_species_analysis.csv')
-write.csv(data_for_overall_pca, '~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output_30_30/wrangled_data/complete_data_for_overall_analysis.csv')
+write.csv(data_for_network_pca, 'Results/processed_output_30_30/wrangled_data/complete_data_for_network_analysis.csv')
+write.csv(data_for_module_pca, 'Results/processed_output_30_30/wrangled_data/complete_data_for_module_analysis.csv')
+write.csv(data_for_species_pca, 'Results/processed_output_30_30/wrangled_data/complete_data_for_species_analysis.csv')
+write.csv(data_for_overall_pca, 'Results/processed_output_30_30/wrangled_data/complete_data_for_overall_analysis.csv')
