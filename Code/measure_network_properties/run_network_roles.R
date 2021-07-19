@@ -26,7 +26,9 @@ run_network_roles = function(){
   }
 
   # Save dataframe
-  write.csv(final_df,'Results/processed_output/network_roles/network_roles_niche.csv')
+  # It will currently store data from networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (processed_output_30_30).
+  # If you want to work with networks of different size, change the numbers (processed_output_X_X)
+  write.csv(final_df,'Results/processed_output_30_30/network_roles/network_roles_niche.csv')
 }
 
 # Run the function
