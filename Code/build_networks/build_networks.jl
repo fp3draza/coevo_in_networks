@@ -81,6 +81,8 @@ end
     folder_to_save_txt = string(current_directory,"/../../Data/for_modular/")
     
     # Determine network size and replicas
+    # These numbers were changed to build networks of different size      and different consumer
+    # resource species ratios.
     num_sp_in_A = 30
     num_sp_in_B = 30
     replicas = 20
