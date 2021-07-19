@@ -11,7 +11,7 @@ compute_network_roles = function(connectance, replica){
   # Load network file
   # It will currently read data from networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (networks_30_30).
   # If you want to work with networks of different size, change the numbers (networks_X_X)
-  network_data = read.csv(paste('~/Documents/PhD/Work/Projects/coevo_in_networks/Data/networks_30_30/C_',connectance,'_R_',replica,'.csv',sep=''),header = FALSE)
+  network_data = read.csv(paste('Data/networks_30_30/C_',connectance,'_R_',replica,'.csv',sep=''),header = FALSE)
  
   # Name columns and rows of network
   colnames(network_data) = paste('C',1:ncol(network_data),sep = '')
@@ -20,7 +20,7 @@ compute_network_roles = function(connectance, replica){
   # Load membership file form MODULAR output
   # It will currently read data from networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (for_modular_30_30).
   # If you want to work with networks of different size, change the numbers (for_modular_X_X)
-  membership = read.table(paste('~/Documents/PhD/Work/Projects/coevo_in_networks/Data/for_modular_30_30/resultsSA/MEMBERS_C_',connectance,'_R_',replica,'.txt',sep =''))
+  membership = read.table(paste('Data/for_modular_30_30/resultsSA/MEMBERS_C_',connectance,'_R_',replica,'.txt',sep =''))
   membership = membership[-1,]
   membership$index = as.numeric(substring(membership$V1,2))
   membership = membership[order(membership$index),]
