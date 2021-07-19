@@ -9,14 +9,18 @@ compute_network_roles = function(connectance, replica){
 	# - Replica: int, the replica value of the network
 
   # Load network file
-  network_data = read.csv(paste('Data/networks/C_',connectance,'_R_',replica,'.csv',sep=''),header = FALSE)
+  # It will currently read data from networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (networks_30_30).
+  # If you want to work with networks of different size, change the numbers (networks_X_X)
+  network_data = read.csv(paste('~/Documents/PhD/Work/Projects/coevo_in_networks/Data/networks_30_30/C_',connectance,'_R_',replica,'.csv',sep=''),header = FALSE)
  
   # Name columns and rows of network
   colnames(network_data) = paste('C',1:ncol(network_data),sep = '')
   rownames(network_data) = paste('R',1:nrow(network_data),sep = '')
-
+  
   # Load membership file form MODULAR output
-  membership = read.table(paste('Data/for_modular/resultsSA/MEMBERS_C_',connectance,'_R_',replica,'.txt',sep =''))
+  # It will currently read data from networks of 60 species with a 30-30 resource-consumer ratio. This is specified in the directory path (for_modular_30_30).
+  # If you want to work with networks of different size, change the numbers (for_modular_X_X)
+  membership = read.table(paste('~/Documents/PhD/Work/Projects/coevo_in_networks/Data/for_modular_30_30/resultsSA/MEMBERS_C_',connectance,'_R_',replica,'.txt',sep =''))
   membership = membership[-1,]
   membership$index = as.numeric(substring(membership$V1,2))
   membership = membership[order(membership$index),]
@@ -34,10 +38,10 @@ compute_network_roles = function(connectance, replica){
   mem = c(membership_rows$V2,membership_cols$V2)
 
   # Calculate the within module degree of species
-  within_module_degree_z_score = within_module_deg_z_score(network,mem)
+  within_module_degree_z_score = within_module_deg_z_score(network,as.numeric(mem))
 
   # Calculate among-module connectivity
-  among_module_connectivity = part_coeff(network,mem)
+  among_module_connectivity = part_coeff(network,as.numeric(mem))
 
   # Define network metadata
   network_name = paste('C_',connectance,'_R_',replica, sep = '')
@@ -54,29 +58,35 @@ compute_network_roles = function(connectance, replica){
 
   # Classify species depending on among-module connectivity and within module degree
   for (row in 1:nrow(df_result)) {
-
-    # Classify species as peripherals
-    if (as.numeric(df_result$within_module_degree[row]) <= 2.5 & as.numeric(df_result$among_module_connectivity[row]) <= 0.62) {
-      df_result$role[row] = 'peripheral'
-      df_result$color[row] = '#CB2314'
+    if (is.nan(as.numeric(df_result$within_module_degree[row])) | is.na(as.numeric(df_result$within_module_degree[row]))) {
+      df_result$role[row] = 'none'
+      df_result$color[row] = '#######'
     }
     
-    # Classify species as connector
-    else if (as.numeric(df_result$within_module_degree[row]) <= 2.5 & as.numeric(df_result$among_module_connectivity[row]) > 0.62) {
-      df_result$role[row] = 'connector'
-      df_result$color[row] = '#273046'
-    }
-
-   # Classify species as network hubs
-    else if (as.numeric(df_result$within_module_degree[row]) > 2.5 & as.numeric(df_result$among_module_connectivity[row]) > 0.62) {
-      df_result$role[row] = 'network hub'
-      df_result$color[row] = '#1E1E1E'
-    }
-
-   # Classify species as module hubs
-    else if (as.numeric(df_result$within_module_degree[row]) > 2.5 & as.numeric(df_result$among_module_connectivity[row]) <= 0.62) {
-      df_result$role[row] = 'module hub'
-      df_result$color[row] = '#354823'
+    else{
+    # Classify species as peripherals
+      if(as.numeric(df_result$within_module_degree[row]) <= 2.5 & as.numeric(df_result$among_module_connectivity[row]) <= 0.62) {
+        df_result$role[row] = 'peripheral'
+        df_result$color[row] = '#CB2314'
+      }
+    
+      # Classify species as connector
+      else if (as.numeric(df_result$within_module_degree[row]) <= 2.5 & as.numeric(df_result$among_module_connectivity[row]) > 0.62) {
+        df_result$role[row] = 'connector'
+        df_result$color[row] = '#273046'
+      }
+  
+     # Classify species as network hubs
+      else if (as.numeric(df_result$within_module_degree[row]) > 2.5 & as.numeric(df_result$among_module_connectivity[row]) > 0.62) {
+        df_result$role[row] = 'network hub'
+        df_result$color[row] = '#1E1E1E'
+      }
+  
+     # Classify species as module hubs
+      else if (as.numeric(df_result$within_module_degree[row]) > 2.5 & as.numeric(df_result$among_module_connectivity[row]) <= 0.62) {
+        df_result$role[row] = 'module hub'
+        df_result$color[row] = '#354823'
+      }
     }
   }
 
