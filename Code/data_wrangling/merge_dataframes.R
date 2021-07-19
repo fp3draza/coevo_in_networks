@@ -46,13 +46,13 @@ merge_dataframe = function(directory){
     }
 
     # Write merged file
-    write.csv(full_dataframe,paste(directory,'merged_results.csv',sep = ''))
+    write.csv(full_dataframe,paste(directory,'_merged_results.csv',sep = ''))
     # Print
     print('done')
 }
 
 # Define the directory where trait matching results are stored
-trait_matching_directory = 'Results/processed_output/trait_matching/'
+trait_matching_directory = '~/Documents/PhD/Work/Projects/coevo_in_networks/Results/processed_output/trait_matching/'
 
 # Run function with the specified trait matching directory
 merge_dataframe(trait_matching_directory)
