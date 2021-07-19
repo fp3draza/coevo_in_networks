@@ -35,9 +35,10 @@ using Random, Distributions, CSV, Distributed, Statistics, DelimitedFiles, DataF
     # This will obtain the current directory, it assumes you are running this script form where it is located
     current_directory = @__DIR__
     # Define folder to store results
-    folder =  string(current_directory,"/../../Results/model_output/")
+    # It currently is set to _30_30, which means it uses the data of networks consisting of 60 species, with 30 resource and 30 consumer species. The model output will be stored in a directory called model_output_30_30, the directory name will change if you use a different network size. If you want to run model with networks of different sizes or resource-consumer ratio, change numbers.
+    folder =  string(current_directory,"/../../Results/model_output_30_30/")
     # Define folder where networks are stored
-    network_directory = string(current_directory,"/../../Data/networks/"
+    network_directory = string(current_directory,"/../../Data/networks_30_30/")
    
     # Define metadata to store 
     alpha_string = replace(string(alpha),"." => "")
@@ -62,14 +63,15 @@ using Random, Distributions, CSV, Distributed, Statistics, DelimitedFiles, DataF
         mkdir(replace(net_files[i],".csv"=>""))
 
         # Read network
-        mat = readdlm(string(network_directory,net_files[i]),',',)[2:end,2:end]
+        mat = readdlm(string(network_directory,net_files[i]),',',)[1:end,1:end]
        
         # Calculate network size
-        n_row, n_col = size(mat)
+        n_row = size(mat)[1]
+        n_col = size(mat)[2]
         n_sp = n_row + n_col
 
         # Build square adjacency matrix
-        f = vcat(hcat(zeros(n_row,n_col),mat),hcat(transpose(mat),zeros(n_row,n_col)))
+        f = vcat(hcat(zeros(n_row,n_row),mat),hcat(transpose(mat),zeros(n_col,n_col)))
 
         ## Cycle through the number of simulations to perform per network
         for k in 1:n_sim
@@ -95,14 +97,13 @@ using Random, Distributions, CSV, Distributed, Statistics, DelimitedFiles, DataF
 
             ## Run simulations
             z_list = coevolution_model(n_sp,f,phi,alpha,theta,init,m,epsilon,t_max)
-
             # Extract results
             z_initial = z_list[1,:]
             z_final = z_list[size(z_list)[1],:]
 
             # Build dataframe
             z = DataFrame(transpose(hcat(theta,z_initial,z_final)))
-            z = rename(z, vcat([Symbol("R$i") for i in 1:30],[Symbol("C$i") for i in 1:30]))
+            z = rename(z, vcat([Symbol("R$i") for i in 1:n_row],[Symbol("C$i") for i in 1:n_col]))
             z = insert!(z,1,["theta","z_initial","z_final"],:names)
 
             # Write result
@@ -138,7 +139,6 @@ end
 
   # Cycle throught the generations
   for t = 1:(t_max - 1)
-
     # Obtain current trait values
     z = z_mat[t,:]
 
@@ -160,10 +160,8 @@ end
 
     # Calculate the difference in trait values between current and previous generation
     dif = mean(abs.(z .- z_mat[t+1,:]))
-
     # Update counter
     up_to = t
-
     # Determine if equilibrium has been reached
     if dif < epsilon
       break
@@ -172,6 +170,7 @@ end
 
   # Return matrix with trait values
   return z_mat[1:up_to,:]
+  #return z_mat[1:up_to,:]
 end
 
 # Run the simulations
