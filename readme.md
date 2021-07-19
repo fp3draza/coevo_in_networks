@@ -49,7 +49,7 @@ In this section I traverse the `Code` subdirectories and give a short descriptio
 
 ## `build_networks`
 
-* `build_networks.jl`: This file employs the niche model to build a bipartite network with a pre-specified target connectance. At the moment, it is configured to build networks of size 60 (species are equally split between guilds). The target connectance is set to range from 0.05 to 0.49 with increments of 0.02. For each particular value of connectance, the script will build 20 replica networks. Thus, this script will generate 460 different networks. A copy of each network is stored in `Data/networks` and `Data/for_modular/`. Networks will be stored as `.csv` in `networks` and as `.txt` in `for_modular`. Note that this script is meant to be run in parallel. 
+* `build_networks.jl`: This file employs the niche model to build a bipartite network with a pre-specified target connectance. At the moment, it is configured to build networks of size 60, although the size and ratio of consumer-resource species can be modified. The target connectance is set to range from 0.05 to 0.49 with increments of 0.02. For each particular value of connectance, the script will build 20 replica networks. Thus, this script will generate 460 different networks. A copy of each network is stored in `Data/networks` and `Data/for_modular/`. Networks will be stored as `.csv` in `networks` and as `.txt` in `for_modular`. Note that this script is meant to be run in parallel. 
 
 ## `coevolution_simulation`
 
@@ -137,9 +137,7 @@ In order to replicate the findings reported in `The joint role of coevolutionary
     
         a. Run figure_2.R
         b. Run figure_3.R
-        c. Run figure_S1.R
-        d. Run figure_S2.R
-        e. Run figures_S3_S4_and_S5.R
+
 
 Note that running the entire workflow will likely take a couple of days as both
 `build_networks.jl` and `HPC_run_simulations.jl` are slow scripts. The time can be reduced if the number of replicas or networks generated is decreased. Code should be run on `R` version 4.0.4 and `Julia` version 1.5.0.
